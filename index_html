@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parabéns!</title>
+    <style>
+        /* Resetando o estilo básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Estilo para o texto "PARABÉNS!!!" */
+        #parabens {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #ff5733;
+            animation: colorChange 3s infinite;
+            text-align: center;
+            z-index: 2;
+        }
+
+        @keyframes colorChange {
+            0% { color: #ff5733; }
+            25% { color: #33ff57; }
+            50% { color: #3357ff; }
+            75% { color: #ff33a1; }
+            100% { color: #ff5733; }
+        }
+
+        /* Estilo para o gato pulando */
+        #catContainer {
+            display: flex;
+            justify-content: center;
+            gap: 10px;  /* Espaço entre as imagens do gato */
+        }
+
+        .cat {
+            width: 100px;
+            animation: jump 1.5s ease-in-out infinite;
+        }
+
+        @keyframes jump {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Estilo para os balões */
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 50px;
+            height: 70px;
+            background-color: #ff5733;
+            border-radius: 50%;
+            animation: floatUp 5s ease-in infinite;
+            z-index: 1;
+        }
+
+        .balloon:nth-child(1) { background-color: #ff5733; animation-duration: 6s; }
+        .balloon:nth-child(2) { background-color: #33ff57; animation-duration: 7s; }
+        .balloon:nth-child(3) { background-color: #3357ff; animation-duration: 8s; }
+        .balloon:nth-child(4) { background-color: #ff33a1; animation-duration: 9s; }
+        .balloon:nth-child(5) { background-color: #ffff33; animation-duration: 10s; }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100vh); }
+        }
+
+        /* Estilo do botão de mutar/desmutar */
+        #muteButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #muteButton:hover {
+            background-color: #ff3300;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Texto "PARABÉNS!!!" -->
+    <div id="parabens">PARABÉNS NAH!!!</div>
+
+    <!-- Gato pulando -->
+    <div id="catContainer">
+        <img class="cat" src="GIF HAPPY.gif" alt="Gato pulando">
+        <img class="cat" src="GIF HAPPY.gif" alt="Gato pulando">
+        <img class="cat" src="GIF HAPPY.gif" alt="Gato pulando">
+    </div>
+
+    <!-- Balões flutuando -->
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+
+    <!-- Áudio de fundo -->
+    <audio id="background-music" loop autoplay muted>
+        <source src="happy-happy-happy-cat.mp3" type="audio/mp3">
+        Seu navegador não suporta a tag de áudio.
+    </audio>
+
+    <!-- Botão para Mutar/Desmutar -->
+    <button id="muteButton" onclick="toggleMute()">Desmutar</button>
+
+    <script>
+        // Função para adicionar balões de forma aleatória
+        function addBalloon() {
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+
+            // A cada novo balão, geramos uma posição horizontal aleatória
+            const leftPosition = Math.random() * window.innerWidth;
+            balloon.style.left = `${leftPosition}px`;
+
+            // Adicionamos o balão na página
+            document.body.appendChild(balloon);
+
+            // Remover o balão depois de 10 segundos
+            setTimeout(() => {
+                balloon.remove();
+            }, 10000);
+        }
+
+        // Chama a função addBalloon a cada 500ms
+        setInterval(addBalloon, 500);
+
+        // Referência ao áudio
+        const audio = document.getElementById("background-music");
+
+        // Função para alternar entre mutar/desmutar
+        function toggleMute() {
+            if (audio.muted) {
+                audio.muted = false;
+                document.getElementById("muteButton").textContent = "Mutar";
+            } else {
+                audio.muted = true;
+                document.getElementById("muteButton").textContent = "Desmutar";
+            }
+        }
+    </script>
+
+</body>
+</html>
